@@ -67,7 +67,7 @@ La aplicación estará disponible en `http://localhost:5173`.
 
 ## Usuarios de Prueba
 
-Utiliza estas credenciales para probar los diferentes niveles de permisos (RBAC):
+Utilice estas credenciales para probar los diferentes niveles de permisos (RBAC):
 
 | Email             | Password     | Rol        | Permisos                                  |
 | :---------------- | :----------- | :--------- | :---------------------------------------- |
@@ -119,6 +119,6 @@ POSTGRES_DB=postgres
 ## Scripts Disponibles (Backend)
 
 - `npm run dev`: Servidor con hot-reload.
-- `npm run prisma:migrate`: Cree y aplica migraciones.
-- `npm run prisma:seed`: Ejecute el seeder (puebla la base de datos).
+- `npm run prisma:migrate`: Cree y aplique migraciones.
+- `npm run prisma:seed`: Ejecute el seeder (llena la base de datos).
 - `npm test`: Ejecute tests con Jest e Integration tests.
