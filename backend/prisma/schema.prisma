@@ -1,0 +1,36 @@
+// Database connection
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Client generator
+generator client {
+  provider = "prisma-client-js"
+}
+
+// User roles
+enum Role {
+  admin
+  editor
+  viewer
+}
+
+// User entity
+model User {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+  role     Role   @default(viewer)
+}
+
+// Record entity
+model Record {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  category  String
+  status    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

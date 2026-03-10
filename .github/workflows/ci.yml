@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+      
+      - name: Install dependencies
+        run: cd backend && npm ci
+      
+      - name: Generate Prisma Client
+        run: cd backend && npx prisma generate
+      
+      - name: Lint
+        run: cd backend && npm run build # Simple way to check types/lint
+      
+      - name: Run Tests
+        env:
+          DATABASE_URL: "postgresql://user:password@localhost:5432/testdb?schema=public"
+          JWT_SECRET: "mock_jwt_secret_for_tests"
+        run: cd backend && npm test
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: Install dependencies
+        run: cd frontend && npm install # Vite projects often use npm install if lockfile is missing
+      
+      - name: Build
+        run: cd frontend && npm run build
